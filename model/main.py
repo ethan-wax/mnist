@@ -5,10 +5,10 @@ from model.utils import get_dataloader
 
 
 if __name__ == '__main__':
-    train()
-
-    model = MLP()
-    model.load_state_dict(torch.load('saved_models/mlp.pt'))
+    device = torch.device('mps' if torch.backends.mps.is_available() else 'cpu')
+    print(f"Running on {'mps' if torch.backends.mps.is_available() else 'cpu'}")
+    model = MLP().to(device)
+    model = train(model, device)
     
     _, test_data = get_dataloader()
 
@@ -18,6 +18,8 @@ if __name__ == '__main__':
         model.eval()
         
         for images, labels in test_data:
+            images = images.to(device)
+            labels = labels.to(device)
             outputs = model.forward(images)
             _, predicted = torch.max(outputs, dim=1)
             total += labels.size(0)

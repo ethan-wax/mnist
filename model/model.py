@@ -10,6 +10,7 @@ class MLP(nn.Module):
             nn.Sigmoid(),
             nn.Linear(hidden_size, num_classes),
         )
+        self.type = 'mlp'
 
     def forward(self, x):
         return self.layers(x)
