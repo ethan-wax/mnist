@@ -2,7 +2,7 @@ import torch
 import torch.nn as nn
 
 class MLP(nn.Module):
-    def __init__(self, input_size=784, hidden_size=100, num_classes=10):
+    def __init__(self, input_size=784, hidden_size=128, num_classes=10):
         super().__init__()
         self.layers = nn.Sequential(
             nn.Flatten(),

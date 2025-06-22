@@ -6,7 +6,7 @@ from model.model import MLP
 
 def train(model_type="mlp", epochs=10):
     """Train a model and save it to the saved_models folder"""
-    _, train_loader = get_dataloader()
+    train_loader, _ = get_dataloader()
 
     if model_type == "mlp":
         model = MLP()
@@ -18,14 +18,15 @@ def train(model_type="mlp", epochs=10):
 
     for epoch in range(epochs):
         model.train()
-        for batch_idx, (images, labels) in enumerate(train_loader):
-            output = model.forward(images)
-            loss = criterion(output, labels)
+        for images, labels in train_loader:
+            outputs = model.forward(images)
+            loss = criterion(outputs, labels)
 
             optimizer.zero_grad()
             loss.backward()
             optimizer.step()
+        print(f'Finished epoch {epoch + 1} of {epochs}')
 
-    torch.save(model.state_dict, f"../saved_models/{model_type}.pt") 
+    torch.save(model.state_dict(), f"saved_models/{model_type}.pt") 
 
     
