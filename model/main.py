@@ -1,4 +1,5 @@
 import torch
+import sys
 from model.model import MLP, CNN
 from model.train import train
 from model.utils import get_dataloader
@@ -7,8 +8,12 @@ from model.utils import get_dataloader
 if __name__ == '__main__':
     device = torch.device('mps' if torch.backends.mps.is_available() else 'cpu')
     print(f"Running on {'mps' if torch.backends.mps.is_available() else 'cpu'}")
-    # model = MLP().to(device)
-    model = CNN().to(device)
+    if 'mlp' in sys.argv:
+        model = MLP().to(device)
+    elif 'cnn' in sys.argv:
+        model = CNN().to(device)
+    else:
+        raise ValueError('Please pick mlp or cnn as the model type')
     model = train(model, device)
     
     _, test_data = get_dataloader()
