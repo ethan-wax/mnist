@@ -1,5 +1,5 @@
 import torch
-from model.model import MLP
+from model.model import MLP, CNN
 from model.train import train
 from model.utils import get_dataloader
 
@@ -7,7 +7,8 @@ from model.utils import get_dataloader
 if __name__ == '__main__':
     device = torch.device('mps' if torch.backends.mps.is_available() else 'cpu')
     print(f"Running on {'mps' if torch.backends.mps.is_available() else 'cpu'}")
-    model = MLP().to(device)
+    # model = MLP().to(device)
+    model = CNN().to(device)
     model = train(model, device)
     
     _, test_data = get_dataloader()

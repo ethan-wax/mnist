@@ -14,3 +14,25 @@ class MLP(nn.Module):
 
     def forward(self, x):
         return self.layers(x)
+
+class CNN(nn.Module):
+    def __init__(self):
+        super().__init__()
+        self.layers = nn.Sequential(
+            nn.Conv2d(1, 16, 3),
+            nn.ReLU(),
+            nn.Conv2d(16, 16, 3),
+            nn.ReLU(),
+            nn.MaxPool2d(2),
+            nn.Conv2d(16, 16, 3),
+            nn.ReLU(),
+            nn.Conv2d(16, 16, 3),
+            nn.ReLU(),
+            nn.MaxPool2d(2),
+            nn.Flatten(),
+            nn.Linear(16 * 4 * 4, 10)
+        )
+        self.type = 'cnn'
+
+    def forward(self, x):
+        return self.layers(x)
